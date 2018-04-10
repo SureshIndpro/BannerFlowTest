@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/BannerFlow.Entities/BannerFlow.Entities/bin
+/BannerFlow.Entities/BannerFlow.Entities/obj
+/BannerFlow.Repositories/BannerFlow.Repositories/bin
+/BannerFlow.Repositories/BannerFlow.Repositories/obj
+/BannerFlow.Services/BannerFlow.Services/bin
+/BannerFlow.Services/BannerFlow.Services/obj
+/BannerFlow.Web/bin
+/BannerFlow.Web/obj/Debug
+/packages

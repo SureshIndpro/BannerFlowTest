@@ -1,0 +1,23 @@
+﻿<div id="divBanner">
+    
+</div>
+<div id="divError" style="display:none">@ViewBag.Error</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            if (@string.IsNullOrEmpty(ViewBag.Error).ToString().ToLower()) {
+                $.getJSON("/api/Bannerapi/GetBannerHtmlById/@ViewBag.BannerId",
+                    function (data) {
+                        var divTable = $("#divBanner");
+                        divTable.html("");
+                        divTable.append(data);
+                    });
+            }
+            else {
+                $('#divError').show();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿<div>
+    Banners
+</div>
+<a href="/home/create">Create Banner</a>
+<div id="divTable">
+
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            GetAllBanners();
+
+            $('#divTable').on("click", "a.deleteBanner", function () {
+                var bannerId = $(this).data('id');
+
+                $.ajax({
+                    url: '/api/bannerapi/delete/' + bannerId,
+                    type: 'GET',
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (content) {
+                        alert("Banner deleted");
+                        GetAllBanners();
+                    },
+                    error: function (e) {
+                        alert(e.responseJSON.ExceptionMessage);
+                    }
+                });
+                return false;
+            });
+        });
+
+        function GetAllBanners() {
+            $.getJSON("/api/Bannerapi/getall",
+                function (data) {
+                    var divTable = $("#divTable");
+                    if (data.length == 0)
+                        divTable.html("No Banners Found");
+                    else {
+
+                        //Create the index table.
+                        var table = $("<table ><tr><th>Banner Id</th><th>Created</th><th></th><th></th><th></th></tr></table>");
+                        table[0].border = "1";
+                        var cell;
+                        $.map(data, function (itemData) {
+                            var row = $(table[0].insertRow(-1));
+                            cell = $("<td />");
+                            cell.html(itemData.Id);
+                            row.append(cell);
+
+                            cell = $("<td />");
+                            cell.html(new Date(itemData.Created).toDateString());
+                            row.append(cell);
+
+                            cell = $("<td />");
+                            cell.html("<a href='/Home/ShowBanner/" + itemData.Id + "' >Show Banner</a>");
+                            row.append(cell);
+
+                            cell = $("<td />");
+                            cell.html("<a href='/Home/Edit/" + itemData.Id + "' >Edit</a>");
+                            row.append(cell);
+
+                            cell = $("<td />");
+                            cell.html("<a class='deleteBanner' data-id=" + itemData.Id + " >Delete</a>");
+                            row.append(cell);
+                        });
+
+                        divTable.html("");
+                        divTable.append(table);
+                    }
+                });
+        }
+    </script>
+}
